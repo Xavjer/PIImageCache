@@ -200,12 +200,9 @@ open class PIImageCache {
     }
     
     fileprivate func diskCacheWrite(_ url:URL,image:UIImage) {
-        do {
-            if let path = PIImageCache.filePath(url, config: config) {
-                try UIImagePNGRepresentation(image)!.write(to: URL(fileURLWithPath: path))
-                //.writeToFile(path, atomically: true)
-            }
-        } catch {}
+        if let path = PIImageCache.filePath(url, config: config) {
+            NSData(data: UIImagePNGRepresentation(image)!).write(toFile: path, atomically: true)
+        }
     }
     
     //private download
