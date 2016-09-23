@@ -200,8 +200,12 @@ open class PIImageCache {
     }
     
     fileprivate func diskCacheWrite(_ url:URL,image:UIImage) {
-        if let path = PIImageCache.filePath(url, config: config) {
-            NSData(data: UIImagePNGRepresentation(image)!).write(toFile: path, atomically: true)
+        do {
+            if let path = PIImageCache.filePath(url, config: config) {
+                let wrote = NSData(data: UIImagePNGRepresentation(image)!).write(toFile: path, atomically: true)
+            }
+        } catch let e {
+            print("Error writing file")
         }
     }
     
@@ -305,10 +309,15 @@ open class PIImageCache {
     }
     
     fileprivate class func filePath(_ url: URL, config:Config) -> String? {
-        let urlstr = url.absoluteString
+        let urlstr = String(url.absoluteString.characters.reversed())
         var code = ""
+        var maxLength: Int = 40
         for char in urlstr.utf8 {
             code = code + "u\(char)"
+            maxLength -= 1
+            if maxLength == 0 {
+                break
+            }
         }
         return "\(config.cacheRootDirectory)\(config.cacheFolderName)/\(code)"
         
