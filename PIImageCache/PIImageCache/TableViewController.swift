@@ -31,8 +31,7 @@ class TableViewController : UITableViewController {
       let i = (indexPath as NSIndexPath).row
       cell.id = i
       let url = URL(string: "http://lorempixel.com/200/200/" + lormpixelCategory[i] )!
-      PIImageCache.shared.getWithId(url, id: i) {
-        [weak self] id, image in
+      PIImageCache.shared.getWithId(url, id: i) { (id, image) in
         if id == cell.id {
           cell.icon.image = image
         }

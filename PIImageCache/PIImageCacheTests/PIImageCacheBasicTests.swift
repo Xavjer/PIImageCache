@@ -21,10 +21,10 @@ class PIImageBasicCacheTests: XCTestCase {
     }
 
     //for Background
-    var cache = PIImageCache() // or PIImageCache.sherd
+    let cache = PIImageCache() // or PIImageCache.sherd
     image = cache.get(url)!
     XCTAssert(image!.size.width == 200 && image!.size.height == 200 , "Pass")
-    var config = PIImageCache.Config()
+    let config = PIImageCache.Config()
     config.maxMemorySum = 5
     config.limitByteSize = 100 * 1024 // 100kB
     cache.setConfig(config)
